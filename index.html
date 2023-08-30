@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="preload"
+      href="/fonts/NanumPenScript-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Anonymous Confessions</title>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="left">
+        <a href="index.html" class="logo">anonymous confessions</a>
+      </div>
+      <div class="right">
+        <input class="search" placeholder="Search..." type="text" />
+        <button class="button" onclick="openPostModal()">Add new post</button>
+        <button class="button" onclick="themeToggle()">Toggle theme</button>
+      </div>
+    </div>
+    <div class="feed"><p class="status">Loading...</p></div>
+    <p class="footerText">Made with ❤ by SkySorcerer</p>
+    <div class="popup comments closed" id="comments">
+      <div class="content">
+        <span class="close" onclick="closeModal('comments')">&times;</span>
+        <p class="title">Comments</p>
+        <div class="allComments"> </div>
+        <div class="inputs">
+          <input
+            type="text"
+            class="input"
+            id="commentInput"
+            placeholder="Write a comment..."
+            autocomplete="off"
+          />
+          <button class="button">Send comment</button>
+        </div>
+      </div>
+    </div>
+    <div class="popup addConfession closed" id="addConfession">
+      <div class="content">
+        <span class="close" onclick="closeModal('addConfession')">&times;</span>
+        <p class="title">Add a confession</p>
+        <p class="description" id="timeoutText">
+          Share your feelings! Add an anonymous confession for everyone to see.
+        </p>
+        <div class="inputs">
+          <label for="pTitle">Title</label> <br />
+          <input type="text" id="pTitle" autocomplete="off" /> <br /><br />
+          <label for="pContent">Content</label> <br />
+          <textarea
+            name="pContent"
+            id="pContent"
+            cols="30"
+            rows="10"
+          ></textarea>
+        </div>
+        <button class="button" id="postConfession">Post confession</button>
+      </div>
+    </div>
+  </body>
+  <script src="socket.js" type="module"></script>
+  <script src="script.js"></script>
+</html>
