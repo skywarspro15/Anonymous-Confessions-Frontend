@@ -181,6 +181,8 @@ function createComment(commentData) {
 }
 
 const postConfession = document.getElementById("postConfession");
+const commentInput = document.getElementById("commentInput");
+const sendComment = document.getElementById("sendComment");
 const search = document.querySelector(".search");
 let unsorted = [];
 let searched = false;
@@ -350,6 +352,8 @@ sortPref.addEventListener("change", () => {
   }
 });
 
+getSortPreference();
+
 socket.on("posts", (allPosts) => {
   unsorted = allPosts;
   console.log(unsorted);
@@ -401,6 +405,20 @@ socket.on("comments", (comments) => {
   });
 });
 
+socket.on("newComment", (comment) => {
+  const allComments = document.querySelector(".allComments");
+  if (allComments.querySelector(".status")) {
+    allComments.querySelector(".status").remove();
+  }
+  if (comment.id == whatPost) {
+    createComment(comment.content);
+  }
+});
+
+socket.on("commentPosted", () => {
+  commentInput.value = "";
+});
+
 socket.on("timeout", (seconds) => {
   console.log(seconds);
   let descText = document.getElementById("timeoutText");
@@ -424,4 +442,12 @@ postConfession.addEventListener("click", () => {
     postConfession.innerHTML = "Posting...";
     addPost(pTitle.value, pContent.value);
   }
+});
+
+sendComment.addEventListener("click", () => {
+  let cContent = commentInput.value;
+  if (cContent.trim() == "") {
+    return;
+  }
+  socket.emit("comment", { id: whatPost, comment: cContent.trim() });
 });
