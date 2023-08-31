@@ -25,13 +25,23 @@
         <button class="button" onclick="themeToggle()">Toggle theme</button>
       </div>
     </div>
-    <div class="feed"><p class="status">Loading...</p></div>
+    <div class="sortSelector">
+      <label for="sortBy">Sort by:</label>
+      <select name="sortBy" id="sortBy">
+        <option value="popular">Popularity</option>
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+      </select>
+    </div>
+    <div class="feed">
+      <p class="status">Loading...</p>
+    </div>
     <p class="footerText">Made with ❤ by SkySorcerer</p>
     <div class="popup comments closed" id="comments">
       <div class="content">
         <span class="close" onclick="closeModal('comments')">&times;</span>
         <p class="title">Comments</p>
-        <div class="allComments"> </div>
+        <div class="allComments"></div>
         <div class="inputs">
           <input
             type="text"

@@ -57,7 +57,7 @@ function addReadMore(paragraph) {
   }
 }
 
-function createPost(postData) {
+function createPost(postData, isSorting = true) {
   const pID = postData.id;
   const pTitle = decodeEntities(postData.title);
   const pContent = decodeEntities(postData.content).replace(
@@ -132,7 +132,16 @@ function createPost(postData) {
   button3.innerHTML = "Share (" + pShares + ")";
   footer.appendChild(button3);
 
-  feed.appendChild(post);
+  if (isSorting) {
+    feed.appendChild(post);
+    return;
+  }
+
+  if (getSortPreference() == "newest") {
+    feed.prepend(post);
+  } else {
+    feed.appendChild(post);
+  }
 }
 
 function createComment(commentData) {
@@ -173,7 +182,7 @@ function createComment(commentData) {
 
 const postConfession = document.getElementById("postConfession");
 const search = document.querySelector(".search");
-let posts = [];
+let unsorted = [];
 let searched = false;
 let isSearching = false;
 
@@ -183,9 +192,9 @@ function searchPosts() {
   history.replaceState(
     { page: 1 },
     "Anonymous Confessions",
-    "?q=" + search.value
+    window.location.pathname + "?q=" + search.value
   );
-  posts.forEach((post) => {
+  unsorted.forEach((post) => {
     if (
       post.title
         .toLowerCase()
@@ -228,13 +237,20 @@ search.addEventListener("input", () => {
   if (search.value.trim() != "") {
     return;
   }
-  history.replaceState({ page: 1 }, "Anonymous Confessions", "/");
+  history.replaceState(
+    { page: 1 },
+    "Anonymous Confessions",
+    window.location.pathname
+  );
   isSearching = false;
   searched = false;
-  feed.innerHTML = "";
-  posts.forEach((post) => {
-    createPost(post);
-  });
+  if (getSortPreference() == "popular") {
+    sortByPopular(unsorted);
+  } else if (getSortPreference() == "newest") {
+    sortByNewest(unsorted);
+  } else if (getSortPreference() == "oldest") {
+    sortByOldest(unsorted);
+  }
 });
 
 search.addEventListener("keydown", (event) => {
@@ -259,9 +275,10 @@ socket.on("disconnect", () => {
 });
 
 function sortByPopular(curPosts) {
+  console.log("Popularity sort selected");
   let likesArray = [];
   feed.innerHTML = "";
-  posts = curPosts;
+  const posts = curPosts.slice(0);
   posts.forEach((post) => {
     likesArray.push(post.likes);
   });
@@ -280,13 +297,72 @@ function sortByPopular(curPosts) {
       }
     });
   });
+}
+
+function sortByNewest(curPosts) {
+  console.log("Newest sort selected");
+  feed.innerHTML = "";
+  const posts = curPosts.slice(0).reverse();
+  posts.forEach((post) => {
+    createPost(post);
+  });
+}
+
+function sortByOldest(curPosts) {
+  console.log(curPosts);
+  console.log("Oldest sort selected");
+  feed.innerHTML = "";
+  const posts = curPosts.slice(0);
+  posts.forEach((post) => {
+    createPost(post);
+  });
+}
+
+let sortPref = document.getElementById("sortBy");
+
+function getSortPreference() {
+  if (localStorage.getItem("sortby") === null) {
+    sortPref.value = "popular";
+    return "popular";
+  }
+  sortPref.value = localStorage.getItem("sortby");
+  return localStorage.getItem("sortby");
+}
+
+function setSortPreference(pref) {
+  localStorage.setItem("sortby", pref);
+}
+
+sortPref.addEventListener("change", () => {
+  console.log("Before sort", unsorted);
+  console.log(sortPref.value);
+  setSortPreference(sortPref.value);
+  if (sortPref.value == "popular") {
+    sortByPopular(unsorted);
+  } else if (sortPref.value == "newest") {
+    sortByNewest(unsorted);
+  } else if (sortPref.value == "oldest") {
+    sortByOldest(unsorted);
+  }
+  console.log("After sort", unsorted);
   if (isSearching) {
     searchPosts();
   }
-}
+});
 
-socket.on("posts", (curPosts) => {
-  sortByPopular(curPosts);
+socket.on("posts", (allPosts) => {
+  unsorted = allPosts;
+  console.log(unsorted);
+  if (getSortPreference() == "popular") {
+    sortByPopular(unsorted);
+  } else if (getSortPreference() == "newest") {
+    sortByNewest(unsorted);
+  } else if (getSortPreference() == "oldest") {
+    sortByOldest(unsorted);
+  }
+  if (isSearching) {
+    searchPosts();
+  }
 });
 
 socket.on("likes", (postData) => {
@@ -297,8 +373,8 @@ socket.on("likes", (postData) => {
 });
 
 socket.on("newPost", (post) => {
-  posts.push(post);
-  createPost(post);
+  unsorted.push(post);
+  createPost(post, false);
 });
 
 socket.on("posted", () => {

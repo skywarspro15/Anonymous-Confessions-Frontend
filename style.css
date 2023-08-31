@@ -139,6 +139,21 @@ input.search:focus {
   transform: translateY(-3px);
 }
 
+select {
+  font-family: inherit;
+  background: none;
+  color: var(--fg-color);
+  border: none;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+select option {
+  background: var(--button-back);
+  color: var(--button-fore);
+  border-radius: 5px;
+}
+
 .read-more-button {
   color: var(--fg-color);
   background: transparent;
@@ -151,6 +166,18 @@ input.search:focus {
 
 .read-more-button:hover {
   cursor: pointer;
+}
+
+.sortSelector {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+  width: 50%;
+  position: relative;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 p.status {
