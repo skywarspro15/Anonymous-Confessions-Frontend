@@ -12,16 +12,17 @@ These are the features that are either in Anonymous Confessions, or is still imp
 - [x] Post sort
 - [x] Post comments
 - [x] Post search
+- [x] Post sharing
 - [x] Mobile friendly layout
 - [x] Filtered posts (AI moderated)
 - [x] "I relate" button
 
 ### Planned/Implementing
 
-- [ ] Post sharing
 - [ ] Custom theme store
 - [ ] "I relate" button for comments
 - [ ] Comment replies
+- [ ] Filtered comments
 - [ ] Post tags
 
 ## Inspiration

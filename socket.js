@@ -130,6 +130,24 @@ function createPost(postData, isSorting = true) {
   button3.id = "share";
   button3.classList.add("button");
   button3.innerHTML = "Share (" + pShares + ")";
+  button3.addEventListener("click", async () => {
+    const shareData = {
+      title: "Anonymous Confessions: " + pTitle,
+      text: "Take a look at this post from Anonymous Confessions!",
+      url:
+        window.location.protocol +
+        "//" +
+        window.location.host +
+        "/post.html?p=" +
+        pID,
+    };
+    try {
+      await navigator.share(shareData);
+      socket.emit("share", pID);
+    } catch (e) {
+      alert("Sorry, we cannot share that post: " + e);
+    }
+  });
   footer.appendChild(button3);
 
   if (isSorting) {
@@ -272,7 +290,7 @@ function addPost(title, content) {
 socket.on("disconnect", () => {
   const status = document.createElement("p");
   status.className = "status";
-  status.innerText = "Reconnecting...";
+  status.innerText = "You're offline! Hang tight as we attempt to reconnect...";
   feed.prepend(status);
 });
 
@@ -374,6 +392,13 @@ socket.on("likes", (postData) => {
   let footer = post.querySelector(".footer");
   let relate = footer.querySelector("#relate");
   relate.innerText = "Relate (" + postData.likes + ")";
+});
+
+socket.on("shares", (postData) => {
+  let post = feed.querySelector("#post-" + postData.id);
+  let footer = post.querySelector(".footer");
+  let relate = footer.querySelector("#share");
+  relate.innerText = "Share (" + postData.shares + ")";
 });
 
 socket.on("newPost", (post) => {
