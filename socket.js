@@ -145,6 +145,9 @@ function createPost(postData, isSorting = true) {
       await navigator.share(shareData);
       socket.emit("share", pID);
     } catch (e) {
+      if (e == "AbortError: Share canceled") {
+        return;
+      }
       alert("Sorry, we cannot share that post: " + e);
     }
   });
