@@ -211,6 +211,9 @@ let isSearching = false;
 
 function searchPosts() {
   isSearching = true;
+  if (!socket.connected) {
+    return;
+  }
   feed.innerHTML = "";
   history.replaceState(
     { page: 1 },
@@ -360,6 +363,9 @@ sortPref.addEventListener("change", () => {
   console.log("Before sort", unsorted);
   console.log(sortPref.value);
   setSortPreference(sortPref.value);
+  if (!socket.connected) {
+    return;
+  }
   if (sortPref.value == "popular") {
     sortByPopular(unsorted);
   } else if (sortPref.value == "newest") {
