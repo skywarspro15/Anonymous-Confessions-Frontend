@@ -24,6 +24,8 @@ These are the features that are either in Anonymous Confessions, or is still imp
 - [ ] Comment replies
 - [ ] Filtered comments
 - [ ] Post tags
+- [ ] Full page posts
+- [ ] Multiplayer puzzles
 
 ## Inspiration
 
@@ -55,4 +57,4 @@ I also added the "I relate" button, suggested by a friend of mine, [@maurosGithu
 
 I also added searching and sorting by popularity, newest, and oldest, just for the convenience it gives to me and hopefully for other users.
 
-That's all for me, hope you enjoy the site, and I'll catch you on the flip side, when I post there occasionally .👋
+That's all for me, hope you enjoy the site, and I'll catch you on the flip side, when I post there occasionally. 👋
