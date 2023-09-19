@@ -33,11 +33,11 @@ I feel like that most confession sites are bland, and the design doesn't really 
 
 One of them are insanely unmoderated, and have topics that are not really related. Like, what does "Big T\*ts Jehovah’s Witness Wife and Teacher" have to do with confessing?
 
-![Screenshot of Simply Confess Website](image.png)
+![Screenshot of Simply Confess Website](images/image.png)
 
 And this site on mobile doesn't even let you post confessions!
 
-![Uh oh, how do I post?](image-1.png)
+![Uh oh, how do I post?](images/image-1.png)
 
 Oh, you're on a phone? Too bad, you can't post. >:\(
 
@@ -47,7 +47,7 @@ This is one of the reasons why I built Anonymous Confessions, a place that's des
 
 I picked a brown-ish color palette, some say it's a mocha color pallete, which really suited my vision on what the site should look like. I'd like to imagine this place as a campsite, where people talk about things in the campfire.
 
-![Anonymous Confessions Screenshot](image-2.png)
+![Anonymous Confessions Screenshot](images/image-2.png)
 
 I also used Google's Perspective API to filter out unwanted posts through the power of **✨AI✨**. This should minimize the "Big T\*ts Jehovah’s Witness Wife and Teacher" type of bullsh\*t you see on unmoderated sites.
 
