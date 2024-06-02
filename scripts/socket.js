@@ -1,9 +1,7 @@
 import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 
 const feed = document.querySelector(".feed");
-const socket = io(
-  "https://anonymous-confessions-2-backend.skywarspro15.repl.co"
-);
+const socket = io("https://olive.nxw.pw:8443/");
 let whatPost = -1;
 
 var decodeEntities = (function () {
